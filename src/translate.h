@@ -81,6 +81,10 @@ void printTranslation(char * sentence);
 
 void searchTable(int number, struct DNAword * word);
 
+char getLetter(struct DNAset * st, int word);
+
+void setSecondChar(struct DNAword * word);
+
 void setIntron(struct DNAword * word);
 
 #endif /* TRANSLATE_H_ */

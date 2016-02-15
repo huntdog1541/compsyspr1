@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "translate.h"
+#include "file.h"
 
 void initTable()
 {
@@ -104,12 +105,12 @@ int setLetter(int number, char letter, struct DNAset * order)
 
 void printFirstCharacter(struct DNAcontent * order)
 {
-	printf("First character: %c\n", order->firstOrder->first);
+	/*printf("First character: %c\n", order->firstOrder->first);
 	printf("Second character: %c\n", order->secondOrder->first);
-	printf("Third character: %c\n", order->thirdOrder->first);
-	/*printAllCharacters(order->firstOrder, "first order");
+	printf("Third character: %c\n", order->thirdOrder->first);*/
+	printAllCharacters(order->firstOrder, "first order");
 	printAllCharacters(order->secondOrder, "second order");
-	printAllCharacters(order->thirdOrder, "third order");*/
+	printAllCharacters(order->thirdOrder, "third order");
 }
 
 void printAllCharacters(struct DNAset * set, char * str)
@@ -119,11 +120,25 @@ void printAllCharacters(struct DNAset * set, char * str)
 	printf("second: %c\n", set->second);
 	printf("third: %c\n", set->third);
 	printf("fourth: %c\n", set->fourth);
+	fflush(stdout);
 }
+
+void startTranslate(struct content * con, struct DNAcontent * order)
+{
+	struct DNAword wrd;
+	fseek(con->fit, 0L, SEEK_SET);
+	char temp = fgetc(con->fit);
+	while(temp != EOF)
+	{
+		translateCharacter(con, &wrd, temp);
+		temp = fgetc(con->fit);
+	}
+}
+
 
 void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t)
 {
-		char sentence[6];
+		char sentence[3];
 		findCharacter(t, word, sentence);
 		translateWord(order, word, sentence);
 		printTranslation(sentence);
@@ -131,28 +146,41 @@ void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t
 
 void findCharacter(char t, struct DNAword * word, char * sentence)
 {
-	/*if(t == 0)
+	if(t == 0)
 		setIntron(word);
-	if(n == 1)
-		setSecondChar(word);*/
+	if(t == 1)
+		setSecondChar(word);
 	if((t < 93) && (t > 32))
 		searchTable(t, word);
-	if((t > 93) && (t < 155))
-	{
-		t = t - 62;
-		searchTable(t, word);
-	}
-	searchTable(t, word);
 }
 
 void translateWord(struct DNAcontent * order, struct DNAword * word, char * sentence)
 {
-
+	sentence[0] = getLetter(order->firstOrder, word->first);
+	sentence[1] = getLetter(order->secondOrder, word->second);
+	sentence[2] = getLetter(order->thirdOrder, word->third);
 }
 
 void printTranslation(char * sentence)
 {
+	printf("%s\n", sentence);
+}
 
+char getLetter(struct DNAset * st, int word)
+{
+	char answer;
+	switch(word)
+	{
+		case 0:
+				answer = st->first; break;
+		case 1:
+				answer = st->second; break;
+		case 2:
+				answer = st->third; break;
+		case 3:
+				answer = st->fourth; break;
+	}
+	return answer;
 }
 
 void searchTable(int number, struct DNAword * word)
@@ -169,7 +197,7 @@ void searchTable(int number, struct DNAword * word)
 						word->first = i;
 						word->second = j;
 						word->third = k;
-						break;
+						return;
 					}
 				}
 			}
@@ -181,4 +209,11 @@ void setIntron(struct DNAword * word)
 	word->first = 0;
 	word->second = 0;
 	word->third = 0;
+}
+
+void setSecondChar(struct DNAword * word)
+{
+	word->first = 0;
+	word->second = 0;
+	word->third = 1;
 }

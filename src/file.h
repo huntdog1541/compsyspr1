@@ -7,16 +7,21 @@
 
 struct content {
 		FILE * fin;
+		FILE * fit;
 		FILE * fout;
 		long int size;
 };
 
-void processFile(char * fileName);
+void processFile(char * fileName, struct content * con);
 
 void initFiles(struct content * con);
 
 void openFile(char * fileName, struct content * con);
 
-char * renameFile(char * fileName);
+void closeFile(struct content * con);
+
+void renameFile(char * fileName);
+
+void readOutFile(struct content * con);
 
 #endif /* FILE_H_ */

@@ -17,16 +17,19 @@ int main(int argc, char ** argv)
 	{
 
 	}
-	/*initTable();
-	printTable();
-	struct DNAcontent con;
-	intitDNAcontent(&con);
-	setDNAorder(&con);
-	printFirstCharacter(&con);
-	destroyDNAcontent(&con);*/
+	struct content con;
 	char str[256];
 	strcpy(str, "test.txt");
-	processFile(str);
+	processFile(str, &con);
+	initTable();
+	//printTable();
+	struct DNAcontent st;
+	intitDNAcontent(&st);
+	setDNAorder(&st);
+	printFirstCharacter(&st);
+	startTranslate(&con, &st);
+	destroyDNAcontent(&st);
+	closeFile(&con);
 
 	return 0;
 }
