@@ -16,7 +16,7 @@ void error(char * msg)
 
 int main(int argc, char ** argv)
 {
-  int sockfd, nwsockfd portnumber, clilen;
+  int sockfd, nwsockfd, portnumber, clilen;
   char buffer[256];
   struct sockaddr_in server_addr, cli_addr;
   int n;
@@ -45,7 +45,7 @@ int main(int argc, char ** argv)
   {
     error("ERROR: error on accept\n");
   }
-  bzero(buffer);
+  bzero(buffer, 256);
   n = read(nwsockfd, buffer, 255);
   if(n < 0) error("ERROR: error reading from socket\n");
   printf("Message: %s\n");
