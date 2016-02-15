@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "translate.h"
+#include "file.h"
 
 
 int main(int argc, char ** argv)
@@ -16,12 +17,16 @@ int main(int argc, char ** argv)
 	{
 
 	}
-	initTable();
-	//printTable();
+	/*initTable();
+	printTable();
 	struct DNAcontent con;
 	intitDNAcontent(&con);
 	setDNAorder(&con);
 	printFirstCharacter(&con);
-	destroyDNAcontent(&con);
+	destroyDNAcontent(&con);*/
+	char str[256];
+	strcpy(str, "test.txt");
+	processFile(str);
+
 	return 0;
 }

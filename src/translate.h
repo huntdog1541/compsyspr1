@@ -66,18 +66,18 @@ void printAllCharacters(struct DNAset * set, char * str);
 
 void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t);
 
-void findCharacter(char t, struct DNAword * word);
+void findCharacter(char t, struct DNAword * word, char * sentence);
 
 /* translateWord - translates a single word to a
  *
  */
 
-void translateWord(struct DNAcontent * order, struct DNAword word);
+void translateWord(struct DNAcontent * order, struct DNAword * word, char * sentence);
 
 /* printTranslation - prints the translation of a single character
  *
  */
-void printTranslation(struct DNAword * word);
+void printTranslation(char * sentence);
 
 void searchTable(int number, struct DNAword * word);
 

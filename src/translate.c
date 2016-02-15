@@ -129,7 +129,7 @@ void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t
 		printTranslation(sentence);
 }
 
-void findCharacter(char t, struct DNAword * word)
+void findCharacter(char t, struct DNAword * word, char * sentence)
 {
 	/*if(t == 0)
 		setIntron(word);
@@ -145,12 +145,12 @@ void findCharacter(char t, struct DNAword * word)
 	searchTable(t, word);
 }
 
-void translateWord(struct DNAcontent * order, struct DNAword word)
+void translateWord(struct DNAcontent * order, struct DNAword * word, char * sentence)
 {
 
 }
 
-void printTranslation(struct DNAword * word)
+void printTranslation(char * sentence)
 {
 
 }

@@ -11,27 +11,12 @@ struct content {
 		long int size;
 };
 
-void initFiles(struct content * con)
-{
-	con->fin = NULL;
-	con->fout = NULL;
-	con->size = 0;
-}
+void processFile(char * fileName);
 
-void openFile(char * fileName, struct content * con)
-{
-	con->fin = fopen(fileName, "r");
+void initFiles(struct content * con);
 
-}
+void openFile(char * fileName, struct content * con);
 
-void renameFile(char * fileName)
-{
-	int size = 0;
-	while(fileName[--size] != '.')
-	{
-		fileName[size] == '/0';
-	}
-	strcat(fileName, "wi");
-}
+char * renameFile(char * fileName);
 
 #endif /* FILE_H_ */
