@@ -111,6 +111,9 @@ void printFirstCharacter(struct DNAcontent * order)
 	printAllCharacters(order->firstOrder, "first order");
 	printAllCharacters(order->secondOrder, "second order");
 	printAllCharacters(order->thirdOrder, "third order");
+	printf("%c;", order->firstOrder->first);
+	printf("%c;", order->secondOrder->first);
+	printf("%c\n", order->thirdOrder->first);
 }
 
 void printAllCharacters(struct DNAset * set, char * str)
@@ -130,18 +133,19 @@ void startTranslate(struct content * con, struct DNAcontent * order)
 	char temp = fgetc(con->fit);
 	while(temp != EOF)
 	{
-		translateCharacter(con, &wrd, temp);
+		translateCharacter(order, con, &wrd, temp);
 		temp = fgetc(con->fit);
 	}
 }
 
 
-void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t)
+void translateCharacter(struct DNAcontent * order, struct content * con, struct DNAword * word, char t)
 {
-		char sentence[3];
+		char sentence[4];
 		findCharacter(t, word, sentence);
 		translateWord(order, word, sentence);
-		printTranslation(sentence);
+		sentence[3] = '\0';
+		printTranslation(sentence, con);
 }
 
 void findCharacter(char t, struct DNAword * word, char * sentence)
@@ -161,9 +165,10 @@ void translateWord(struct DNAcontent * order, struct DNAword * word, char * sent
 	sentence[2] = getLetter(order->thirdOrder, word->third);
 }
 
-void printTranslation(char * sentence)
+void printTranslation(char * sentence, struct content * con)
 {
 	printf("%s\n", sentence);
+	fprintf(con->fout, sentence);
 }
 
 char getLetter(struct DNAset * st, int word)

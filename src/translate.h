@@ -6,6 +6,7 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
+#include "file.h"
 
 #ifndef TRANSLATE_H_
 #define TRANSLATE_H_
@@ -64,7 +65,7 @@ void printFirstCharacter(struct DNAcontent * order);
 
 void printAllCharacters(struct DNAset * set, char * str);
 
-void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t);
+void translateCharacter(struct DNAcontent * order, struct content * con, struct DNAword * word, char t);
 
 void findCharacter(char t, struct DNAword * word, char * sentence);
 
@@ -77,7 +78,7 @@ void translateWord(struct DNAcontent * order, struct DNAword * word, char * sent
 /* printTranslation - prints the translation of a single character
  *
  */
-void printTranslation(char * sentence);
+void printTranslation(char * sentence, struct content * con);
 
 void searchTable(int number, struct DNAword * word);
 
