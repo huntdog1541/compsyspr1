@@ -30,14 +30,17 @@ void openFile(char * fileName, struct content * con)
 char * renameFile(char * fileName)
 {
 	int size = strlen(fileName);
+	char answer[256];
+	strcpy(answer, fileName);
 	int t = size--;
-	char temp = fileName[t];
+	char temp = answer[t];
 	while(temp != '.')
 	{
-		fileName[t--] == '/0';
-		temp = fileName[t];
+		answer[t] = '\0';
+		t--;
+		temp = answer[t];
 	}
-	printf("File name is %s\n", fileName);
-	//strcat(fileName, "wi");
+	strcat(answer, "wi");
+	printf("File name is %s\n", answer);
 	return fileName;
 }
