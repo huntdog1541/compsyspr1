@@ -17,7 +17,7 @@ int main(int argc, char ** argv)
 
 	}
 	initTable();
-	printTable();
+	//printTable();
 	struct DNAcontent con;
 	intitDNAcontent(&con);
 	setDNAorder(&con);

@@ -107,4 +107,78 @@ void printFirstCharacter(struct DNAcontent * order)
 	printf("First character: %c\n", order->firstOrder->first);
 	printf("Second character: %c\n", order->secondOrder->first);
 	printf("Third character: %c\n", order->thirdOrder->first);
+	/*printAllCharacters(order->firstOrder, "first order");
+	printAllCharacters(order->secondOrder, "second order");
+	printAllCharacters(order->thirdOrder, "third order");*/
+}
+
+void printAllCharacters(struct DNAset * set, char * str)
+{
+	printf("Print all characters from %s\n", str);
+	printf("first: %c\n", set->first);
+	printf("second: %c\n", set->second);
+	printf("third: %c\n", set->third);
+	printf("fourth: %c\n", set->fourth);
+}
+
+void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t)
+{
+		char sentence[6];
+		findCharacter(t, word, sentence);
+		translateWord(order, word, sentence);
+		printTranslation(sentence);
+}
+
+void findCharacter(char t, struct DNAword * word)
+{
+	/*if(t == 0)
+		setIntron(word);
+	if(n == 1)
+		setSecondChar(word);*/
+	if((t < 93) && (t > 32))
+		searchTable(t, word);
+	if((t > 93) && (t < 155))
+	{
+		t = t - 62;
+		searchTable(t, word);
+	}
+	searchTable(t, word);
+}
+
+void translateWord(struct DNAcontent * order, struct DNAword word)
+{
+
+}
+
+void printTranslation(struct DNAword * word)
+{
+
+}
+
+void searchTable(int number, struct DNAword * word)
+{
+		int i, j, k;
+		for(i = 0; i < dnasize; i++)
+		{
+			for(j = 0; j < dnasize; j++)
+			{
+				for(k = 0; k < dnasize; k++)
+				{
+					if(table[i][j][k] == number)
+					{
+						word->first = i;
+						word->second = j;
+						word->third = k;
+						break;
+					}
+				}
+			}
+		}
+}
+
+void setIntron(struct DNAword * word)
+{
+	word->first = 0;
+	word->second = 0;
+	word->third = 0;
 }

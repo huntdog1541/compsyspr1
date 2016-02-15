@@ -62,6 +62,25 @@ int setLetter(int number, char letter, struct DNAset * order);
 
 void printFirstCharacter(struct DNAcontent * order);
 
+void printAllCharacters(struct DNAset * set, char * str);
 
+void translateCharacter(struct DNAcontent * order, struct DNAword * word, char t);
+
+void findCharacter(char t, struct DNAword * word);
+
+/* translateWord - translates a single word to a
+ *
+ */
+
+void translateWord(struct DNAcontent * order, struct DNAword word);
+
+/* printTranslation - prints the translation of a single character
+ *
+ */
+void printTranslation(struct DNAword * word);
+
+void searchTable(int number, struct DNAword * word);
+
+void setIntron(struct DNAword * word);
 
 #endif /* TRANSLATE_H_ */
