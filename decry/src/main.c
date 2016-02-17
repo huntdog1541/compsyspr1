@@ -19,15 +19,21 @@ int main(int argc, char ** argv)
 	}
 	struct content con;
 	char str[256];
+	char str2[256];
 	strcpy(str, "test.txt");
+	strcpy(str2, "C;T;G");
 	processFile(str, &con);
 	initTable();
 	//printTable();
 	struct DNAcontent st;
 	intitDNAcontent(&st);
-	setDNAorder(&st);
+	parseInput(&st, &con, str2);
 	printFirstCharacter(&st);
-	startTranslate(&con, &st);
+	struct codon cd;
+	readFromInput(&con, &st, &cd);
+	startDecry(&cd, &st, &con);
+	postProcessing(&con);
+	//startTranslate(&con, &st);
 	destroyDNAcontent(&st);
 	closeFile(&con);
 

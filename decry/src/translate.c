@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include "translate.h"
 #include "file.h"
@@ -69,38 +70,44 @@ void destroyDNAcontent(struct DNAcontent * order)
 	free(order->thirdOrder);
 }
 
-void setDNAorder(struct DNAcontent * order)
+void parseInput(struct DNAcontent * order, struct content * con, char * in)
 {
-	int r = getRandomNumber();
-	setDNAset(r, order->firstOrder);
-	r = getRandomNumber();
-	setDNAset(r, order->secondOrder);
-	r = getRandomNumber();
-	setDNAset(r, order->thirdOrder);
+	int i = 0;
+	char temp = in[i];
+	setDNAset(temp, order->firstOrder);
+	i = i + 2;
+	temp = in[i];
+	setDNAset(temp, order->secondOrder);
+	i = i + 2;
+	temp = in[i];
+	setDNAset(temp, order->thirdOrder);
 }
 
-void setDNAset(int r, struct DNAset * order)
+void setDNAset(char r, struct DNAset * order)
 {
-	r = setLetter(r, 'A', order);
-	r = setLetter(r, 'C', order);
-	r = setLetter(r, 'G', order);
-	r = setLetter(r, 'T', order);
-}
-
-int setLetter(int number, char letter, struct DNAset * order)
-{
-	switch(number)
+	switch(r)
 	{
-		case 0:
-				order->first = letter; number++; break;
-		case 1:
-				order->second = letter; number++; break;
-		case 2:
-				order->third = letter; number++; break;
-		case 3:
-				order->fourth = letter; number = 0; break;
+		case 'A':
+				order->first = 'A';
+				order->second = 'C';
+				order->third = 'G';
+				order->fourth = 'T'; break;
+		case 'C':
+				order->first = 'C';
+				order->second = 'G';
+				order->third = 'T';
+				order->fourth = 'A'; break;
+		case 'G':
+				order->first = 'G';
+				order->second = 'T';
+				order->third = 'A';
+				order->fourth = 'C'; break;
+		case 'T':
+				order->first = 'T';
+				order->second = 'A';
+				order->third = 'C';
+				order->fourth = 'G'; break;
 	}
-	return number;
 }
 
 void printFirstCharacter(struct DNAcontent * order)
@@ -221,4 +228,102 @@ void setSecondChar(struct DNAword * word)
 	word->first = 0;
 	word->second = 0;
 	word->third = 1;
+}
+
+void readFromInput(struct content * con, struct DNAcontent * order, struct codon * cd)
+{
+  fseek(con->fin, 0L, SEEK_END);
+  con->size = ftell(con->fin);
+  fseek(con->fin, 0L, SEEK_SET);
+  int error = 0;
+  if((con->size) % 3)
+  {
+    fprintf(stderr, "Error: error getting content from source\n");
+    exit(1);
+  }
+  printf("Size of file is %ld\n", con->size);
+  char * text = (char *)malloc(sizeof(char) * (con->size));
+  error = fread(text, sizeof(char), (con->size), con->fin);
+  if(error != con->size)
+  {
+	  fprintf(stderr, "error getting all content from file");
+	  exit(1);
+  }
+  text[con->size] = '\0';
+  printf("%s\n", text);
+  getCodon(text, cd);
+  free(text);
+}
+
+void printCharArray(char * str, int sz)
+{
+	int i, size = sz;
+	for(i = 0; i < size; i++)
+	{
+		printf("%c : %d\n", str[i], str[i]);
+	}
+}
+
+void getCodon(char * text, struct codon * cd)
+{
+	int size = strlen(text);
+	int i = 0, j = 0, count = 0, k = 0;
+	cd->numberCon = size/3;
+	printf("The number of codon's is %d\n", cd->numberCon);
+	cd->cod = (char *)malloc(sizeof(char) * (size + cd->numberCon));
+	cd->group = (char **)malloc(sizeof(char *) * cd->numberCon);
+	while(i < size)
+	{
+		cd->group[k++] = &cd->cod[count];
+		for(j = 0; j < 3; j++)
+		{
+			cd->cod[count++] = text[i++];
+		}
+		cd->cod[count++] = '\0';
+	}
+	//printCharArray(codon, (size + numCodon));
+	//printAllCodons(cd->group, cd->numberCon);
+}
+
+void printAllCodons(char ** group, int number)
+{
+	int i = 0;
+	for(i = 0; i < number; i++)
+	{
+		printf("Codon #%d is %s\n", (i+1), group[i]);
+	}
+}
+
+void startDecry(struct codon * cd, struct DNAcontent * order, struct content * con)
+{
+	int i;
+	for(i = 0; i < cd->numberCon; i++)
+	{
+		printf("Codon #%d is %s: ", (i+1), cd->group[i]);
+		decrypt(cd->group[i], order, con);
+	}
+}
+
+void decrypt(char * dna, struct DNAcontent * order, struct content * con)
+{
+	int fcol = getNumber(dna[0], order->firstOrder);
+	int scol = getNumber(dna[1], order->secondOrder);
+	int tcol = getNumber(dna[2], order->thirdOrder);
+	fprintf(con->fit, "%c", table[fcol][scol][tcol]);
+	printf("%c : %d\n", table[fcol][scol][tcol], table[fcol][scol][tcol]);
+}
+
+int getNumber(char temp, struct DNAset * set)
+{
+	int answer = 0;
+	if(temp == set->first)
+		answer = 0;
+	else if(temp == set->second)
+		answer = 1;
+	else if(temp == set->third)
+		answer = 2;
+	else
+		answer = 3;
+
+	return answer;
 }

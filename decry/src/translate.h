@@ -45,6 +45,12 @@ struct DNAcontent {
 	struct DNAset * thirdOrder;
 };
 
+struct codon {
+		char * cod;
+		char ** group;
+		int numberCon;
+};
+
 void initTable();
 
 void intitDNAcontent(struct DNAcontent * order);
@@ -55,11 +61,9 @@ void printTable();
 
 int getRandomNumber();
 
-void setDNAorder(struct DNAcontent * order);
+void parseInput(struct DNAcontent * order, struct content * con, char * in);
 
-void setDNAset(int r, struct DNAset * order);
-
-int setLetter(int number, char letter, struct DNAset * order);
+void setDNAset(char r, struct DNAset * order);
 
 void printFirstCharacter(struct DNAcontent * order);
 
@@ -87,5 +91,19 @@ char getLetter(struct DNAset * st, int word);
 void setSecondChar(struct DNAword * word);
 
 void setIntron(struct DNAword * word);
+
+void readFromInput(struct content * con, struct DNAcontent * order, struct codon * cd);
+
+void printCharArray(char * str, int sz);
+
+void getCodon(char * text, struct codon * cd);
+
+void printAllCodons(char ** group, int number);
+
+void startDecry(struct codon * cd, struct DNAcontent * order, struct content * con);
+
+void decrypt(char * dna, struct DNAcontent * order, struct content * con);
+
+int getNumber(char temp, struct DNAset * set);
 
 #endif /* TRANSLATE_H_ */

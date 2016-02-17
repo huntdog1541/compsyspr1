@@ -26,4 +26,8 @@ void renameFile(char * fileName);
 
 void readOutFile(struct content * con);
 
+void readInput(struct content * con, struct DNAcontent * order);
+
+void postProcessing(struct content * con);
+
 #endif /* FILE_H_ */

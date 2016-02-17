@@ -10,20 +10,19 @@ void processFile(char * fileName, struct content * con)
 {
   initFiles(con);
   openFile(fileName, con);
-  processing(con);
 }
 
 void initFiles(struct content * con)
 {
 	con->fin = NULL;
-  con->fit = NULL;
+	con->fit = NULL;
 	con->fout = NULL;
 	con->size = 0;
 }
 
 void openFile(char * fileName, struct content * con)
 {
-	con->fin = fopen(fileName, "r");
+  con->fin = fopen(fileName, "r");
   renameFile(fileName);
   con->fit = fopen(fileName, "w+");
   con->fout = fopen("out.txt", "w+");
@@ -32,8 +31,8 @@ void openFile(char * fileName, struct content * con)
 void closeFile(struct content * con)
 {
   fclose(con->fin);
-  fclose(con->fout);
   fclose(con->fit);
+  fclose(con->fout);
 }
 
 void renameFile(char * fileName)
@@ -86,4 +85,19 @@ void readOutFile(struct content * con)
 		printf("%d\n", temp);
 		temp = fgetc(con->fit);
 	}
+}
+
+void postProcessing(struct content * con)
+{
+  char temp = fgetc(con->fit);
+  while(temp != EOF)
+  {
+    if(temp == 1)
+    {
+      temp = fgetc(con->fit);
+      temp = temp + 62;
+    }
+    fprintf(con->fout, "%c", temp);
+    temp = fgetc(con->fit);
+  }
 }
