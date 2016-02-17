@@ -89,6 +89,7 @@ void readOutFile(struct content * con)
 
 void postProcessing(struct content * con)
 {
+  fseek(con->fit, 0L, SEEK_SET);
   char temp = fgetc(con->fit);
   while(temp != EOF)
   {
