@@ -1,6 +1,8 @@
 /*
 *  File.h
 */
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifndef FILE_H_
 #define FILE_H_
