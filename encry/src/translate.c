@@ -142,6 +142,7 @@ void startTranslate(struct content * con, struct DNAcontent * order)
 void translateCharacter(struct DNAcontent * order, struct content * con, struct DNAword * word, char t)
 {
 		char sentence[4];
+		printf("%d : %c - ", t, t);
 		findCharacter(t, word, sentence);
 		translateWord(order, word, sentence);
 		sentence[3] = '\0';
@@ -152,10 +153,12 @@ void findCharacter(char t, struct DNAword * word, char * sentence)
 {
 	if(t == 0)
 		setIntron(word);
-	if(t == 1)
+	else if(t == 1)
 		setSecondChar(word);
-	if((t < 93) && (t > 32))
+	else if((t < 93) && (t > 31))
 		searchTable(t, word);
+	else
+		printf("Couldn't find in table\n");
 }
 
 void translateWord(struct DNAcontent * order, struct DNAword * word, char * sentence)

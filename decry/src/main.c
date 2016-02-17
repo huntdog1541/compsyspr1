@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
 	char str[256];
 	char str2[256];
 	strcpy(str, "test.txt");
-	strcpy(str2, "C;T;G");
+	strcpy(str2, "T;G;T");
 	processFile(str, &con);
 	initTable();
 	//printTable();

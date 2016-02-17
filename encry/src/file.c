@@ -74,7 +74,7 @@ void processing(struct content * con)
   }
   printf("reading file\n");
   fflush(stdout);
-  //readOutFile(con);
+  readOutFile(con);
 }
 
 void readOutFile(struct content * con)
