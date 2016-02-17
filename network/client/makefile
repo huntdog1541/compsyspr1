@@ -14,4 +14,4 @@ $(MAIN).o: $(MAIN).c $(MAIN).h
 .PHONY : clean
 
 clean :
-			-rm -f *.o *.gch Parser* src/*.gch
+			-rm -f *.o *.gch client
